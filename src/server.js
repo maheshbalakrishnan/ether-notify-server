@@ -18,10 +18,10 @@ var secret = uuidv4();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-var port = process.env.PORT || 80;        // set our port
+var port = process.env.PORT || 8081;        // set our port
 
 var mongoose   = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/notifications', { useNewUrlParser: true }); // connect to our database
+mongoose.connect('mongodb://mongo:27017/notifications', { useNewUrlParser: true }); // connect to our database
 
 // Handle the connection event
 var db = mongoose.connection;
@@ -205,7 +205,7 @@ router.route('/ref_sec')
         })        
 
     });
-app.use('/api', router);
+app.use('/ether/api', router);
 
 // START THE SERVER
 // =============================================================================
