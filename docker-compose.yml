@@ -25,7 +25,8 @@ services:
       - "443:443"
     volumes:
       - /ether/www:/var/www
-      - /ether/conf/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - /ether/logs/nginx:/var/log/nginx
+      - /ether/config/nginx:/etc/nginx/conf.d
       - /ether/certs/certbot/conf:/etc/letsencrypt
       - /ether/certs/certbot/www:/var/www/certbot
   certbot:
