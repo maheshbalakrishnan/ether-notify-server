@@ -1,5 +1,24 @@
 version: "2"
 services:
+  nginx:
+    container_name: ether-nginx
+    image: nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    links:
+      - ether-server:ether-server      
+    volumes:
+      - /ether/www:/var/www
+      - /ether/logs/nginx:/var/log/nginx
+      - /ether/config/nginx:/etc/nginx/conf.d
+  mongo:
+    container_name: ether-mongo
+    image: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - /ether/data:/data/db
   ether-server:
     container_name: ether-server
     restart: always
@@ -8,38 +27,5 @@ services:
       - "8081:8081"
     links:
       - mongo
-      - nginx
-      - certbot
-  mongo:
-    container_name: ether-mongo
-    image: mongo
-    ports:
-      - "27017:27017"
-    volumes:
-      - /ether/data:/data/db
-  nginx:
-    container_name: ether-nginx
-    image: nginx
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - /ether/www:/var/www
-      - /ether/logs/nginx:/var/log/nginx
-      - /ether/config/nginx:/etc/nginx/conf.d
-      - /ether/certs/certbot/conf:/etc/letsencrypt
-      - /ether/certs/certbot/www:/var/www/certbot
-  certbot:
-    container_name: ether-certbot
-    image: certbot/certbot
-    volumes:      
-      - /ether/certs/certbot/conf:/etc/letsencrypt
-      - /ether/certs/certbot/www:/var/www/certbot
-  jenkins:
-      container_name: ether-jenkins
-      image: jenkins/jenkins
-      volumes:
-        - /ether/jenkins:/var/jenkins_home
-      ports:
-        - 8080:8080
-        - 50000:50000
+    depends_on:
+      - mongo

@@ -13,24 +13,14 @@ const uuidv4 = require('uuid/v4');
 
 var secret = uuidv4();
 
+var db = null;
+
 // configure app to use bodyParser()
 // this will let us get the data from a POST
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 var port = process.env.PORT || 8081;        // set our port
-
-var mongoose   = require('mongoose');
-mongoose.connect('mongodb://mongo:27017/notifications', { useNewUrlParser: true }); // connect to our database
-
-// Handle the connection event
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-
-db.once('open', function() {
-  console.log("DB connection alive");
-});
-
 
 // ROUTES FOR OUR API
 // =============================================================================
@@ -211,3 +201,16 @@ app.use('/ether/api', router);
 // =============================================================================
 app.listen(port);
 console.log('Started server on port: ' + port);
+
+setTimeout(() => {
+    var mongoose   = require('mongoose');
+    mongoose.connect('mongodb://mongo:27017/notifications', { useNewUrlParser: true }); // connect to our database
+
+    // Handle the connection event
+    db = mongoose.connection;
+    db.on('error', console.error.bind(console, 'connection error:'));
+
+    db.once('open', function() {
+    console.log("DB connection alive");
+    });
+}, 5000)
