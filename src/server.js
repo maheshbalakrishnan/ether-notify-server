@@ -28,7 +28,7 @@ var router = express.Router();              // get an instance of the express Ro
 
 // middleware to use for all requests
 router.use(function(req, res, next) {
-    if (req.originalUrl === '/api/auth') {
+    if (req.originalUrl === '/ether/api/auth') {
         next();
     } else {
         middleware.checkToken(req, res, secret, next);
