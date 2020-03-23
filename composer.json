@@ -1,0 +1,13 @@
+{
+    "name": "ether/server",
+    "description": "PHP driven Ether server",
+    "type": "project",
+    "license": "Closed-Private",
+    "authors": [
+        {
+            "name": "Mahesh Balakrishnan",
+            "email": "maheshbalakrishnan90@gmail.com"
+        }
+    ],
+    "require": {}
+}
